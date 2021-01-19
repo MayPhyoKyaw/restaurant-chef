@@ -46,18 +46,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link active" href="#">アペタイザー</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link " href="#">ディッシュ</a>
+                        <a class="nav-link active" href="#">ディッシュ</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#">デザート</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">ドリンク</a>
-                    </li>
+                    </li> -->
                 </ul>
                 <!-- Left links -->
             </div>
@@ -79,210 +79,24 @@
     </nav>
     <!-- Navbar -->
     <div id="chef_table">
-        <table id="dataTable" class="table table-striped" style="width:100%">
+        <table id="dataTable" class="table" style="width:100%" cellspacing="0">
             <thead>
                 <tr>
                     <th class="table-name">テブル</th>
-                    <th class="menu-name">アペタイザー</th>
+                    <th class="dish-name">ディッシュ</th>
                     <th class="quantity">数量</th>
-                    <th class="size">サイズ</th>
+                    <!-- <th class="size">サイズ</th> -->
                     <th class="ordered-time">注文時間</th>
-                    <th class="action-btn">アクション</th>
+                    <th class="make-btn">作った</th>
+                    <th class="take-btn">取る</th>
+                    <th class="placed-btn">置いた</th>
+                    <th class="delete-btn">削除</th>
+
+                    <th class="transaction-id hiddenData"></th>
+                    <th class="order-no hiddenData"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>T1</td>
-                    <td>Example</td>
-                    <td>2</td>
-                    <td>S</td>
-                    <td>2020/01/13 13:14:55</td>
-                    <td></td>
-                </tr>
             </tbody>
         </table>
     </div>
