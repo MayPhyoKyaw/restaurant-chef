@@ -130,6 +130,49 @@ tbody tr.selected td {
     box-shadow: none !important;
 }
 
+.btn-primary:disabled {
+    border-color: #999999;
+    background-color: #cccccc;
+    color: #666666;
+    outline: none;
+    padding: 3px 9px;
+    font-size: 14px;
+    cursor: not-allowed !important;
+}
+
+.btn-danger:disabled {
+    border-color: #999999;
+    background-color: #cccccc;
+    color: #666666;
+    outline: none;
+    padding: 3px 9px;
+    font-size: 14px;
+    cursor: not-allowed !important;
+}
+
+.btn-primary:disabled:hover,
+.btn-primary:disabled:active,
+.btn-primary:disabled:focus,
+.btn-primary:disabled:visited,
+.btn-primary:disabled:hover:active {
+    border: 1px solid #999999 !important;
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed !important;
+}
+
+.btn-danger:disabled,
+.btn-danger:disabled:hover,
+.btn-danger:disabled:active,
+.btn-danger:disabled:focus,
+.btn-danger:disabled:visited,
+.btn-danger:disabled:hover:active {
+    border: 1px solid #999999 !important;
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed !important;
+}
+
 .hiddenData {
     display: none;
 }

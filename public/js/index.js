@@ -49,11 +49,11 @@ $(document).ready(function () {
         searchable: false,
         data: "cooked_status",
         defaultContent: "",
-        render: function () {
-          return (
-            '<button type="button" value="Submit" class="btn btn-primary make-button" id="make_btn" data-toggle="modal" data-target="#">OK</button>'
-          );
-        },
+        // render: function () {
+        //   return (
+        //     '<button type="button" value="Submit" class="btn btn-primary make-button" id="make_btn" data-toggle="modal" data-target="#">OK</button>'
+        //   );
+        // },
       },
       {
         targets: "take-btn",
@@ -63,11 +63,11 @@ $(document).ready(function () {
         searchable: false,
         data: "take_status",
         defaultContent: "",
-        render: function () {
-          return (
-            '<button type="button" value="Submit" class="btn btn-primary take-button" id="take_btn" data-toggle="modal" data-target="#">OK</button>'
-          );
-        },
+        // render: function () {
+        //   return (
+        //     '<button type="button" value="Submit" class="btn btn-primary take-button" id="take_btn" data-toggle="modal" data-target="#">OK</button>'
+        //   );
+        // },
       },
       {
         targets: "placed-btn",
@@ -77,11 +77,11 @@ $(document).ready(function () {
         searchable: false,
         data: "placed_status",
         defaultContent: "",
-        render: function () {
-          return (
-            '<button type="button" value="Submit" class="btn btn-primary placed-button" id="placed_btn" data-toggle="modal" data-target="#">OK</button>'
-          );
-        },
+        // render: function () {
+        //   return (
+        //     '<button type="button" value="Submit" class="btn btn-primary placed-button" id="placed_btn" data-toggle="modal" data-target="#">OK</button>'
+        //   );
+        // },
       },
       {
         targets: "delete-btn",
@@ -91,13 +91,43 @@ $(document).ready(function () {
         searchable: false,
         data: "deleted_status",
         defaultContent: "",
-        render: function () {
-          return (
-            '<button type="button" value="Submit" class="btn btn-danger delete-button" id="delete_btn" data-toggle="modal" data-target="#">削除</button>'
-          );
-        },
+        // render: function () {
+        //   return (
+        //     '<button type="button" value="Submit" class="btn btn-danger delete-button" id="delete_btn" data-toggle="modal" data-target="#">削除</button>'
+        //   );
+        // },
       }
     ],
+    rowCallback: function (row, data, index) {
+      // after cooked status
+      if (data["cooked_status"] == 1) {
+        $("td:eq(4)", row).html('<button type="button" class="btn btn-primary make-button" id="make_btn" disabled="disabled">OK</button>')
+      }
+      else {
+        $("td:eq(4)", row).html('<button type="button" class="btn btn-primary make-button" id="make_btn" data-toggle="modal" data-target="#">OK</button>')
+      }
+      // after take status
+      if (data["take_status"] == 1) {
+        $("td:eq(5)", row).html('<button type="button" class="btn btn-primary take-button" id="take_btn" disabled="disabled">OK</button>')
+      }
+      else {
+        $("td:eq(5)", row).html('<button type="button" class="btn btn-primary take-button" id="take_btn" data-toggle="modal" data-target="#">OK</button>')
+      }
+      // after placed status
+      if (data["placed_status"] == 1) {
+        $("td:eq(6)", row).html('<button type="button" class="btn btn-primary placed-button" id="placed_btn" disabled="disabled">OK</button>')
+      }
+      else {
+        $("td:eq(6)", row).html('<button type="button" class="btn btn-primary placed-button" id="placed_btn" data-toggle="modal" data-target="#">OK</button>')
+      }
+      // after delete status
+      if (data["deleted_status"] == 1) {
+        $("td:eq(7)", row).html('<button type="button" class="btn btn-danger delete-button" id="delete_btn" disabled="disabled">削除</button>')
+      }
+      else {
+        $("td:eq(7)", row).html('<button type="button" class="btn btn-danger delete-button" id="delete_btn" data-toggle="modal" data-target="#">削除</button>')
+      }
+    },
   });
 
   // get order data
