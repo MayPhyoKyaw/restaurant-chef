@@ -5,7 +5,7 @@ $(document).ready(function () {
     // scrollCollapse: true,
     // fixedColumns: true,
     responsive: true,
-    // pageLength: 15,
+    // pageLength: 8,
     // info: false,
     lengthChange: false,
     paging: false,
@@ -33,12 +33,26 @@ $(document).ready(function () {
     },
     order: [3, "asc"],
     columnDefs: [
-      { targets: "table-name", data:"tableNo",  width: "9%" },
-      { targets: "dish-name", data:"ordered_titles", width: "48%" },
-      { targets: "quantity", data:"ordered_quantities", width: "9%" },
-      { targets: "ordered-time", data:"ordered_at", width: "12%"},
-      // { targets: "size", width: "10%", className: "column-middle" },
-      // { targets: "ordered-time", width: "20%" },
+      { targets: "table-name", data: "tableNo", width: "9%" },
+      {
+        targets: "dish-name",
+        data: "ordered_titles",
+        width: "48%",
+        defaultContent: "",
+        render: function (data, type, row) {
+          return (data.split(",").join("\n").replace(/\s/g, '</br>'));
+        },
+      },
+      {
+        targets: "quantity",
+        data: "ordered_quantities",
+        width: "9%",
+        defaultContent: "",
+        render: function (data, type, row) {
+          return (data.split(",").join("\n").replace(/\s/g, '</br>'));
+        },
+      },
+      { targets: "ordered-time", data: "ordered_at", width: "12%" },
       { targets: "transaction-id", data: "transactionId", className: "hiddenData" },
       { targets: "order-no", data: "order_no", className: "hiddenData" },
       {
@@ -49,11 +63,6 @@ $(document).ready(function () {
         searchable: false,
         data: "cooked_status",
         defaultContent: "",
-        // render: function () {
-        //   return (
-        //     '<button type="button" value="Submit" class="btn btn-primary make-button" id="make_btn" data-toggle="modal" data-target="#">OK</button>'
-        //   );
-        // },
       },
       {
         targets: "take-btn",
@@ -63,11 +72,6 @@ $(document).ready(function () {
         searchable: false,
         data: "take_status",
         defaultContent: "",
-        // render: function () {
-        //   return (
-        //     '<button type="button" value="Submit" class="btn btn-primary take-button" id="take_btn" data-toggle="modal" data-target="#">OK</button>'
-        //   );
-        // },
       },
       {
         targets: "placed-btn",
@@ -77,11 +81,6 @@ $(document).ready(function () {
         searchable: false,
         data: "placed_status",
         defaultContent: "",
-        // render: function () {
-        //   return (
-        //     '<button type="button" value="Submit" class="btn btn-primary placed-button" id="placed_btn" data-toggle="modal" data-target="#">OK</button>'
-        //   );
-        // },
       },
       {
         targets: "delete-btn",
@@ -91,12 +90,7 @@ $(document).ready(function () {
         searchable: false,
         data: "deleted_status",
         defaultContent: "",
-        // render: function () {
-        //   return (
-        //     '<button type="button" value="Submit" class="btn btn-danger delete-button" id="delete_btn" data-toggle="modal" data-target="#">削除</button>'
-        //   );
-        // },
-      }
+      },
     ],
     rowCallback: function (row, data, index) {
       // after cooked status
@@ -104,29 +98,32 @@ $(document).ready(function () {
         $("td:eq(4)", row).html('<button type="button" class="btn btn-primary make-button" id="make_btn" disabled="disabled">OK</button>')
       }
       else {
-        $("td:eq(4)", row).html('<button type="button" class="btn btn-primary make-button" id="make_btn" data-toggle="modal" data-target="#">OK</button>')
+        $("td:eq(4)", row).html('<button type="button" class="btn btn-primary make-button" id="make_btn" data-toggle="modal" data-target="#makeModalConfirmation">OK</button>')
       }
       // after take status
       if (data["take_status"] == 1) {
         $("td:eq(5)", row).html('<button type="button" class="btn btn-primary take-button" id="take_btn" disabled="disabled">OK</button>')
       }
       else {
-        $("td:eq(5)", row).html('<button type="button" class="btn btn-primary take-button" id="take_btn" data-toggle="modal" data-target="#">OK</button>')
+        $("td:eq(5)", row).html('<button type="button" class="btn btn-primary take-button" id="take_btn" data-toggle="modal" data-target="#takeModalConfirmation">OK</button>')
       }
       // after placed status
       if (data["placed_status"] == 1) {
         $("td:eq(6)", row).html('<button type="button" class="btn btn-primary placed-button" id="placed_btn" disabled="disabled">OK</button>')
       }
       else {
-        $("td:eq(6)", row).html('<button type="button" class="btn btn-primary placed-button" id="placed_btn" data-toggle="modal" data-target="#">OK</button>')
+        $("td:eq(6)", row).html('<button type="button" class="btn btn-primary placed-button" id="placed_btn" data-toggle="modal" data-target="#placeModalConfirmation">OK</button>')
       }
       // after delete status
       if (data["deleted_status"] == 1) {
         $("td:eq(7)", row).html('<button type="button" class="btn btn-danger delete-button" id="delete_btn" disabled="disabled">削除</button>')
       }
       else {
-        $("td:eq(7)", row).html('<button type="button" class="btn btn-danger delete-button" id="delete_btn" data-toggle="modal" data-target="#">削除</button>')
+        $("td:eq(7)", row).html('<button type="button" class="btn btn-danger delete-button" id="delete_btn" data-toggle="modal" data-target="#deleteModalConfirmation">削除</button>')
       }
+      // quantities into list
+      // console.log(data["ordered_quantities"])
+      console.log($(row).find('td:eq(2)').html())
     },
   });
 
@@ -138,7 +135,6 @@ $(document).ready(function () {
     })
     .then(function (data) {
       data.forEach(transaction => {
-        console.log(transaction)
         var rowNode = myTable.row.add({
           "tableNo": `${transaction.order.table_no}`,
           "ordered_at": `${transaction.order.ordered_at}`,
@@ -157,13 +153,181 @@ $(document).ready(function () {
       console.log(error);
     });
 
-  $('#dataTable tbody').on('click', '#make_btn, #take_btn, #placed_btn, #delete_btn', function() {
+  // for make status
+  $('#dataTable tbody').on('click', '#make_btn', function () {
     $(this).parents('tr').toggleClass("selected")
-        .siblings(".selected")
-        .removeClass("selected");
+      .siblings(".selected")
+      .removeClass("selected");
+    var data = myTable.row($(this).parents('tr')).data();
+    console.log(data.transactionId);
+
+    var button = document.getElementById('maked-btn');
+    button.addEventListener('click', function (e) {
+      fetch('/SelectOrder/MakeStatus', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        transaction_id: data.transactionId,
+        cooked_status: data.cooked_status,
+        deleted_status: data.deleted_status,
+        order_no: data.order_no,
+        ordered_at: data.ordered_at,
+        ordered_quantities: data.ordered_quantities,
+        ordered_titles: data.ordered_titles,
+        placed_status: data.placed_status,
+        tableNo: data.tableNo,
+        take_status: data.take_status,
+      })
+    })
+      .then(function (response) {
+        console.log(response)
+        if (response.ok) {
+          console.log('clicked!!');
+          return;
+        }
+        throw new Error('Failed!!');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      location.reload();
+    })
+  })
+
+  // for take status
+  $('#dataTable tbody').on('click', '#take_btn', function () {
+    $(this).parents('tr').toggleClass("selected")
+      .siblings(".selected")
+      .removeClass("selected");
     var data = myTable.row($(this).parents('tr')).data();
     console.log(data);
+
+    var button = document.getElementById('taked-btn');
+    button.addEventListener('click', function (e) {
+      fetch('/SelectOrder/TakeStatus', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          transaction_id: data.transactionId,
+          cooked_status: data.cooked_status,
+          deleted_status: data.deleted_status,
+          order_no: data.order_no,
+          ordered_at: data.ordered_at,
+          ordered_quantities: data.ordered_quantities,
+          ordered_titles: data.ordered_titles,
+          placed_status: data.placed_status,
+          tableNo: data.tableNo,
+          take_status: data.take_status,
+        })
+      })
+        .then(function (response) {
+          console.log(response)
+          if (response.ok) {
+            console.log('clicked!!');
+            return;
+          }
+          throw new Error('Failed!!');
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        location.reload();
+    })
   })
-  $("thead tr").css("border-bottom","5px solid #000");
+
+  // for placed status
+  $('#dataTable tbody').on('click', '#placed_btn', function () {
+    $(this).parents('tr').toggleClass("selected")
+      .siblings(".selected")
+      .removeClass("selected");
+    var data = myTable.row($(this).parents('tr')).data();
+    console.log(data);
+
+    var button = document.getElementById('placed-btn');
+    button.addEventListener('click', function (e) {
+      fetch('/SelectOrder/PlaceStatus', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          transaction_id: data.transactionId,
+          cooked_status: data.cooked_status,
+          deleted_status: data.deleted_status,
+          order_no: data.order_no,
+          ordered_at: data.ordered_at,
+          ordered_quantities: data.ordered_quantities,
+          ordered_titles: data.ordered_titles,
+          placed_status: data.placed_status,
+          tableNo: data.tableNo,
+          take_status: data.take_status,
+        })
+      })
+        .then(function (response) {
+          console.log(response)
+          if (response.ok) {
+            console.log('clicked!!');
+            return;
+          }
+          throw new Error('Failed!!');
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        location.reload();
+    })
+  })
+
+  // for delete status
+  $('#dataTable tbody').on('click', '#delete_btn', function () {
+    $(this).parents('tr').toggleClass("selected")
+      .siblings(".selected")
+      .removeClass("selected");
+    var data = myTable.row($(this).parents('tr')).data();
+    console.log(data);
+
+    var button = document.getElementById('deleted-btn');
+    button.addEventListener('click', function (e) {
+      fetch('/SelectOrder/DeleteStatus', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          transaction_id: data.transactionId,
+          cooked_status: data.cooked_status,
+          deleted_status: data.deleted_status,
+          order_no: data.order_no,
+          ordered_at: data.ordered_at,
+          ordered_quantities: data.ordered_quantities,
+          ordered_titles: data.ordered_titles,
+          placed_status: data.placed_status,
+          tableNo: data.tableNo,
+          take_status: data.take_status,
+        })
+      })
+        .then(function (response) {
+          console.log(response)
+          if (response.ok) {
+            console.log('clicked!!');
+            return;
+          }
+          throw new Error('Failed!!');
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        location.reload();
+    })
+  })
+
   $(".dataTables_wrapper .row:first-child>div:first-child").append($("#dataTable_info"));
 });

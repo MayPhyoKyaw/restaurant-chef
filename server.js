@@ -1,7 +1,7 @@
 /*server.js*/
 
 // include all required modules
-var http = require ('http');
+var http = require('http');
 const express = require('express');
 var bodyParser = require('body-parser');
 
@@ -14,11 +14,11 @@ const port = 4000;
 app.use(bodyParser.urlencoded({ extended: true }));
 // Static Files
 app.use(express.static('public'));
-app.use('/css' , express.static(__dirname + 'public/css'))
-app.use('/js' , express.static(__dirname + 'public/js'))
-app.use('/scss' , express.static(__dirname + 'public/scss'))
-app.use('/img' , express.static(__dirname + 'public/img'))
-app.use('/vendor' , express.static(__dirname + 'public/vendor'))
+app.use('/css', express.static(__dirname + 'public/css'))
+app.use('/js', express.static(__dirname + 'public/js'))
+app.use('/scss', express.static(__dirname + 'public/scss'))
+app.use('/img', express.static(__dirname + 'public/img'))
+app.use('/vendor', express.static(__dirname + 'public/vendor'))
 
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
@@ -28,7 +28,7 @@ app.get('', (req, res) => {
 })
 
 // Listen on port
-app.listen(port , () => console.info(`Listening on port ${port}`))
+app.listen(port, () => console.info(`Listening on port ${port}`))
 
 // get order data from the database
 app.get('/SelectOrder', async (req, res) => {
@@ -42,11 +42,190 @@ app.get('/SelectOrder', async (req, res) => {
     });
     // specify the DB's name
     const dbRes = client.db(dbName);
-    // const query = { deleted_status: 0 };
+    const query = { order: {deleted_status: 0} };
     console.log("Connected correctly to server for selecting....");
     dbRes.collection('transaction').find().toArray((err, result) => {
-        console.log(result)
         if (err) return console.log(err);
         res.send(result);
     });
+});
+
+// update make status
+app.post('/SelectOrder/MakeStatus', (req, res) => {
+    const url = 'mongodb+srv://ksp:ksp123@cluster0.tqggl.mongodb.net/testinggg?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true';
+    const client = new MongoClient(url);
+    const dbName = "resturant"
+
+    async function EditRun() {
+        try {
+            await client.connect();
+            console.log("Connected correctly to server for editting make status....");
+            const database = client.db(dbName);
+            const collection = database.collection("transaction");
+            console.log(req.body.transaction_id)
+            // create a filter for a movie to update
+            const filter = {
+                _id: req.body.transaction_id,
+            };
+            // update a document
+            const updateDoc = {
+                $set: {
+                    order: {
+                        cooked_status: 1,
+                        deleted_status: req.body.deleted_status,
+                        take_status: req.body.take_status,
+                        placed_status: req.body.placed_status,
+                        ordered_titles: req.body.ordered_titles,
+                        ordered_quantities: req.body.ordered_quantities,
+                        order_no: req.body.order_no,
+                        table_no: req.body.tableNo,
+                        ordered_at: req.body.ordered_at,
+                    }
+                },
+            };
+            // for update many
+            const result = await collection.updateMany(filter, updateDoc);
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+        } finally {
+            await client.close();
+        }
+    }
+    EditRun().catch(console.dir);
+});
+
+// update take status
+app.post('/SelectOrder/TakeStatus', (req, res) => {
+    const url = 'mongodb+srv://ksp:ksp123@cluster0.tqggl.mongodb.net/testinggg?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true';
+    const client = new MongoClient(url);
+    const dbName = "resturant"
+
+    async function EditRun() {
+        try {
+            await client.connect();
+            console.log("Connected correctly to server for editting take status....");
+            const database = client.db(dbName);
+            const collection = database.collection("transaction");
+            console.log(req.body.transaction_id)
+            // create a filter for a movie to update
+            const filter = {
+                _id: req.body.transaction_id,
+            };
+            // update a document
+            const updateDoc = {
+                $set: {
+                    order: {
+                        cooked_status: req.body.cooked_status,
+                        deleted_status: req.body.deleted_status,
+                        take_status: 1,
+                        placed_status: req.body.placed_status,
+                        ordered_titles: req.body.ordered_titles,
+                        ordered_quantities: req.body.ordered_quantities,
+                        order_no: req.body.order_no,
+                        table_no: req.body.tableNo,
+                        ordered_at: req.body.ordered_at,
+                    }
+                },
+            };
+            // for update many
+            const result = await collection.updateMany(filter, updateDoc);
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+        } finally {
+            await client.close();
+        }
+    }
+    EditRun().catch(console.dir);
+});
+
+// update place status
+app.post('/SelectOrder/PlaceStatus', (req, res) => {
+    const url = 'mongodb+srv://ksp:ksp123@cluster0.tqggl.mongodb.net/testinggg?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true';
+    const client = new MongoClient(url);
+    const dbName = "resturant"
+
+    async function EditRun() {
+        try {
+            await client.connect();
+            console.log("Connected correctly to server for editting place status....");
+            const database = client.db(dbName);
+            const collection = database.collection("transaction");
+            console.log(req.body.transaction_id)
+            // create a filter for a movie to update
+            const filter = {
+                _id: req.body.transaction_id,
+            };
+            // update a document
+            const updateDoc = {
+                $set: {
+                    order: {
+                        cooked_status: req.body.cooked_status,
+                        deleted_status: req.body.deleted_status,
+                        take_status: req.body.take_status,
+                        placed_status: 1,
+                        ordered_titles: req.body.ordered_titles,
+                        ordered_quantities: req.body.ordered_quantities,
+                        order_no: req.body.order_no,
+                        table_no: req.body.tableNo,
+                        ordered_at: req.body.ordered_at,
+                    }
+                },
+            };
+            // for update many
+            const result = await collection.updateMany(filter, updateDoc);
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+        } finally {
+            await client.close();
+        }
+    }
+    EditRun().catch(console.dir);
+});
+
+// update delete status
+app.post('/SelectOrder/DeleteStatus', (req, res) => {
+    const url = 'mongodb+srv://ksp:ksp123@cluster0.tqggl.mongodb.net/testinggg?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true';
+    const client = new MongoClient(url);
+    const dbName = "resturant"
+
+    async function EditRun() {
+        try {
+            await client.connect();
+            console.log("Connected correctly to server for editting delete status....");
+            const database = client.db(dbName);
+            const collection = database.collection("transaction");
+            console.log(req.body.transaction_id)
+            // create a filter for a movie to update
+            const filter = {
+                _id: req.body.transaction_id,
+            };
+            // update a document
+            const updateDoc = {
+                $set: {
+                    order: {
+                        cooked_status: req.body.cooked_status,
+                        deleted_status: 1,
+                        take_status: req.body.take_status,
+                        placed_status: req.body.placed_status,
+                        ordered_titles: req.body.ordered_titles,
+                        ordered_quantities: req.body.ordered_quantities,
+                        order_no: req.body.order_no,
+                        table_no: req.body.tableNo,
+                        ordered_at: req.body.ordered_at,
+                    }
+                },
+            };
+            // for update many
+            const result = await collection.updateMany(filter, updateDoc);
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+        } finally {
+            await client.close();
+        }
+    }
+    EditRun().catch(console.dir);
 });

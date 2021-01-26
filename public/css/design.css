@@ -10,7 +10,7 @@ body {
 
 #chef_table {
     margin: 50px;
-    margin-top: 20;
+    /* margin-top: 30px; */
 }
 
 .footer {
@@ -49,6 +49,10 @@ body {
 
 #dataTable tbody tr>td:nth-child(8) {
     border-right: 1px solid #dee2e6;
+}
+
+#dataTable tbody td {
+    vertical-align: middle;
 }
 
 tbody tr.selected td {

@@ -88,7 +88,7 @@
                     <!-- <th class="size">サイズ</th> -->
                     <th class="ordered-time">注文時間</th>
                     <th class="make-btn">作った</th>
-                    <th class="take-btn">取る</th>
+                    <th class="take-btn">取った</th>
                     <th class="placed-btn">置いた</th>
                     <th class="delete-btn">削除</th>
 
@@ -99,6 +99,86 @@
             <tbody>
             </tbody>
         </table>
+    </div>
+    <!-- make modal -->
+    <div class="modal fade" id="makeModalConfirmation" tabindex="-1" aria-labelledby="makeModalConfirmation" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="makeModalConfirmation">確認</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    作った後で、ボータンを押してください。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="maked-btn" class="btn btn-primary">作った</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- take modal -->
+    <div class="modal fade" id="takeModalConfirmation" tabindex="-1" aria-labelledby="takeModalConfirmation" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="takeModalConfirmation">確認</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    取った後で、ボータンを押してください。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="taked-btn" class="btn btn-primary">取った</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- place modal -->
+    <div class="modal fade" id="placeModalConfirmation" tabindex="-1" aria-labelledby="placeModalConfirmation" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="placeModalConfirmation">確認</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    置いた後で、ボータンを押してください。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="placed-btn" class="btn btn-primary">置いた</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- delete modal -->
+    <div class="modal fade" id="deleteModalConfirmation" tabindex="-1" aria-labelledby="deleteModalConfirmation" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalConfirmation">確認</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    削除したい場合は、ボータンを押してください。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="deleted-btn" class="btn btn-primary">削除</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">キャンセル</button>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Footer -->
     <footer class="footer text-center">
