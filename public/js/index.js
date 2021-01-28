@@ -134,19 +134,33 @@ $(document).ready(function () {
       throw new Error('Request failed.');
     })
     .then(function (data) {
+      console.log(data, typeof(data))
+      var orders = [];
       data.forEach(transaction => {
-        var rowNode = myTable.row.add({
-          "tableNo": `${transaction.order.table_no}`,
-          "ordered_at": `${transaction.order.ordered_at}`,
-          "order_no": `${transaction.order.order_no}`,
-          "cooked_status": `${transaction.order.cooked_status}`,
-          "take_status": `${transaction.order.take_status}`,
-          "placed_status": `${transaction.order.placed_status}`,
-          "deleted_status": `${transaction.order.deleted_status}`,
-          "ordered_quantities": `${transaction.order.ordered_quantities}`,
-          "ordered_titles": `${transaction.order.ordered_titles}`,
-          "transactionId": `${transaction._id}`,
-        }).draw();
+        // console.log(transaction);
+        orders = transaction.orders;
+        // console.log(orders.ordered_titles)
+        console.log(typeof(orders));
+        // var keys = Object.keys(orders),
+        for (var key in orders){
+          if (orders.hasOwnProperty(key)){
+            // console.log(transaction._id, key, orders[key])
+            var order = orders[key];
+            console.log(order.ordered_no)
+            var rowNode = myTable.row.add({
+              "tableNo": `${order.table_no}`,
+              "ordered_at": `${order.ordered_at}`,
+              "order_no": `${order.ordered_no}`,
+              "cooked_status": `${order.cooked_status}`,
+              "take_status": `${order.take_status}`,
+              "placed_status": `${order.placed_status}`,
+              "deleted_status": `${order.deleted_status}`,
+              "ordered_quantities": `${order.ordered_quantities}`,
+              "ordered_titles": `${order.ordered_titles}`,
+              "transactionId": `${transaction._id}`,
+            }).draw();
+          }
+        }
       });
     })
     .catch(function (error) {
@@ -159,7 +173,7 @@ $(document).ready(function () {
       .siblings(".selected")
       .removeClass("selected");
     var data = myTable.row($(this).parents('tr')).data();
-    console.log(data.transactionId);
+    console.log(data.transactionId, data);
 
     var button = document.getElementById('maked-btn');
     button.addEventListener('click', function (e) {

@@ -62,29 +62,22 @@ app.post('/SelectOrder/MakeStatus', (req, res) => {
             console.log("Connected correctly to server for editting make status....");
             const database = client.db(dbName);
             const collection = database.collection("transaction");
-            console.log(req.body.transaction_id)
+            console.log(req.body.transaction_id ,req.body.order_no)
             // create a filter for a movie to update
             const filter = {
                 _id: req.body.transaction_id,
+                "orders.order_no": req.body.order_no,
             };
             // update a document
             const updateDoc = {
-                $set: {
-                    order: {
+                $push: {
+                    orders: {
                         cooked_status: 1,
-                        deleted_status: req.body.deleted_status,
-                        take_status: req.body.take_status,
-                        placed_status: req.body.placed_status,
-                        ordered_titles: req.body.ordered_titles,
-                        ordered_quantities: req.body.ordered_quantities,
-                        order_no: req.body.order_no,
-                        table_no: req.body.tableNo,
-                        ordered_at: req.body.ordered_at,
                     }
                 },
             };
             // for update many
-            const result = await collection.updateMany(filter, updateDoc);
+            const result = await collection.updateOne(filter, updateDoc);
             console.log(
                 `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
             );
