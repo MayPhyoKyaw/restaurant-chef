@@ -66,15 +66,11 @@ app.post('/SelectOrder/MakeStatus', (req, res) => {
             // create a filter for a movie to update
             const filter = {
                 _id: req.body.transaction_id,
-                "orders.order_no": req.body.order_no,
+                "orders.ordered_no": req.body.order_no,
             };
             // update a document
             const updateDoc = {
-                $push: {
-                    orders: {
-                        cooked_status: 1,
-                    }
-                },
+                $set: {"orders.$.cooked_status": "1"},
             };
             // for update many
             const result = await collection.updateOne(filter, updateDoc);
@@ -104,22 +100,11 @@ app.post('/SelectOrder/TakeStatus', (req, res) => {
             // create a filter for a movie to update
             const filter = {
                 _id: req.body.transaction_id,
+                "orders.ordered_no": req.body.order_no,
             };
             // update a document
             const updateDoc = {
-                $set: {
-                    order: {
-                        cooked_status: req.body.cooked_status,
-                        deleted_status: req.body.deleted_status,
-                        take_status: 1,
-                        placed_status: req.body.placed_status,
-                        ordered_titles: req.body.ordered_titles,
-                        ordered_quantities: req.body.ordered_quantities,
-                        order_no: req.body.order_no,
-                        table_no: req.body.tableNo,
-                        ordered_at: req.body.ordered_at,
-                    }
-                },
+                $set: {"orders.$.take_status": "1"},
             };
             // for update many
             const result = await collection.updateMany(filter, updateDoc);
@@ -149,22 +134,11 @@ app.post('/SelectOrder/PlaceStatus', (req, res) => {
             // create a filter for a movie to update
             const filter = {
                 _id: req.body.transaction_id,
+                "orders.ordered_no": req.body.order_no,
             };
             // update a document
             const updateDoc = {
-                $set: {
-                    order: {
-                        cooked_status: req.body.cooked_status,
-                        deleted_status: req.body.deleted_status,
-                        take_status: req.body.take_status,
-                        placed_status: 1,
-                        ordered_titles: req.body.ordered_titles,
-                        ordered_quantities: req.body.ordered_quantities,
-                        order_no: req.body.order_no,
-                        table_no: req.body.tableNo,
-                        ordered_at: req.body.ordered_at,
-                    }
-                },
+                $set: {"orders.$.placed_status": "1"},
             };
             // for update many
             const result = await collection.updateMany(filter, updateDoc);
@@ -194,22 +168,11 @@ app.post('/SelectOrder/DeleteStatus', (req, res) => {
             // create a filter for a movie to update
             const filter = {
                 _id: req.body.transaction_id,
+                "orders.ordered_no": req.body.order_no,
             };
             // update a document
             const updateDoc = {
-                $set: {
-                    order: {
-                        cooked_status: req.body.cooked_status,
-                        deleted_status: 1,
-                        take_status: req.body.take_status,
-                        placed_status: req.body.placed_status,
-                        ordered_titles: req.body.ordered_titles,
-                        ordered_quantities: req.body.ordered_quantities,
-                        order_no: req.body.order_no,
-                        table_no: req.body.tableNo,
-                        ordered_at: req.body.ordered_at,
-                    }
-                },
+                $set: {"orders.$.deleted_status": "1"},
             };
             // for update many
             const result = await collection.updateMany(filter, updateDoc);

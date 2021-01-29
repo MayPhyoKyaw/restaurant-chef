@@ -116,7 +116,8 @@ $(document).ready(function () {
       }
       // after delete status
       if (data["deleted_status"] == 1) {
-        $("td:eq(7)", row).html('<button type="button" class="btn btn-danger delete-button" id="delete_btn" disabled="disabled">削除</button>')
+        // $("td:eq(7)", row).html('<button type="button" class="btn btn-danger delete-button" id="delete_btn" disabled="disabled">削除</button>')
+        $(row).hide();
       }
       else {
         $("td:eq(7)", row).html('<button type="button" class="btn btn-danger delete-button" id="delete_btn" data-toggle="modal" data-target="#deleteModalConfirmation">削除</button>')
@@ -217,7 +218,7 @@ $(document).ready(function () {
       .siblings(".selected")
       .removeClass("selected");
     var data = myTable.row($(this).parents('tr')).data();
-    console.log(data);
+    console.log(data.transactionId, data);
 
     var button = document.getElementById('taked-btn');
     button.addEventListener('click', function (e) {
@@ -261,7 +262,7 @@ $(document).ready(function () {
       .siblings(".selected")
       .removeClass("selected");
     var data = myTable.row($(this).parents('tr')).data();
-    console.log(data);
+    console.log(data.transactionId, data);
 
     var button = document.getElementById('placed-btn');
     button.addEventListener('click', function (e) {
@@ -305,7 +306,7 @@ $(document).ready(function () {
       .siblings(".selected")
       .removeClass("selected");
     var data = myTable.row($(this).parents('tr')).data();
-    console.log(data);
+    console.log(data.transactionId, data);
 
     var button = document.getElementById('deleted-btn');
     button.addEventListener('click', function (e) {
